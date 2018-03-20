@@ -4,7 +4,7 @@ from django.contrib.postgres.fields import JSONField
 from smp.models import Medium
 
 
-class App(models.Model):
+class Credential(models.Model):
     owner_id = models.IntegerField()
     medium_id = models.SmallIntegerField(choices=Medium.as_choices())
 

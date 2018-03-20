@@ -6,9 +6,9 @@ from utils.django.serializers.mixins import WriteableFieldsMixin
 from . import models
 
 
-class AppSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
+class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
     class Meta:
-        model = models.App
+        model = models.Credential
         fields = ('id', 'medium_id', 'key', 'secret', 'extra', 'scope', 'created_at', 'updated_at')
         writable_fields = ('medium_id', 'key', 'secret', 'extra', 'scope')
 

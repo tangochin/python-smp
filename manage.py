@@ -2,6 +2,6 @@
 
 
 if __name__ == '__main__':
-    import app_manager  # noqa
+    import app_credentials  # noqa
     from smp_commons import manage
     manage.main()

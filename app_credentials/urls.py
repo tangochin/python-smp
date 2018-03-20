@@ -4,6 +4,6 @@ from . import views
 
 
 router = SmpRouter()
-router.register('app', views.AppViewSet, base_name='app')
+router.register('', views.CredentialViewSet, base_name='credential')
 
 urlpatterns = router.urls
