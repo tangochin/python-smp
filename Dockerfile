@@ -1,1 +1,1 @@
-FROM eu.gcr.io/smp-io/smp-base-python-3
+FROM eu.gcr.io/smp-io/smp-base-django
