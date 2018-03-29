@@ -1,0 +1,41 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+    - image: docker:stable-git
+
+    steps:
+    - setup_remote_docker:
+        version: 17.11.0-ce
+
+    - checkout
+
+    - run:
+        name: Checkout git submodules
+        command: |
+          git submodule sync --recursive
+          git submodule update --recursive --init
+
+    - run:
+        name: Setup Docker auth
+        command: |
+          mkdir ~/.docker
+          auth="$(echo $REGISTRY_USERNAME:$REGISTRY_PASSWORD | base64 | tr -d '\n')"
+          echo "{\"auths\": {\"eu.gcr.io\": {\"auth\": \"$auth\"}}}" > ~/.docker/config.json
+
+    - run:
+        name: Build image
+        command: docker build -t eu.gcr.io/smp-io/smp-app-credentials:$CIRCLE_BUILD_NUM .
+
+    - run:
+        name: Push image
+        command: |
+          docker push eu.gcr.io/smp-io/smp-app-credentials:$CIRCLE_BUILD_NUM
+
+workflows:
+  version: 2
+  normal-build:
+    jobs:
+    - build:
+        context: smp
