@@ -17,7 +17,7 @@ class Credential(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '{}:{}'.format(self.owner_id, self.medium)
+        return f'{self.owner_id}:{self.medium}'
 
     @property
     def medium(self):
