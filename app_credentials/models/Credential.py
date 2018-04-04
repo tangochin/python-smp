@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 
-from smp.models import Medium
+from smp_commons.models import Medium
 
 
 class Credential(models.Model):
