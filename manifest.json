@@ -1,0 +1,9 @@
+{
+  "name": "app-credentials",
+  "migrate": true,
+  "celery": true,
+  "requirements": [
+    "postgres",
+    "redis"
+  ]
+}
