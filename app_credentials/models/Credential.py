@@ -8,6 +8,8 @@ class Credential(models.Model):
     owner_id = models.IntegerField()
     medium_id = models.SmallIntegerField(choices=Medium.as_choices())
 
+    app_id = models.IntegerField(blank=True, null=True)
+
     key = models.CharField(max_length=255)
     secret = models.CharField(max_length=255)
     extra = JSONField(default=dict, blank=True)
