@@ -5,6 +5,7 @@ from utils.django.serializers.fields import ChoiceDisplayField
 from utils.django.serializers.mixins import WriteableFieldsMixin
 
 from . import models
+from .logic import initialize
 
 
 class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
@@ -19,7 +20,6 @@ class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
         credential = models.Credential(**validated_data)
         with wrap_media_errors():
             return initialize(credential)
-        return credential
 
     def update(self, instance, validated_data):
         credential = instance
@@ -28,6 +28,4 @@ class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
             setattr(credential, attr, value)
 
         with wrap_media_errors():
-            credential = initialize(credential)
-
-        return credential
+            return initialize(credential)
