@@ -3,7 +3,6 @@ from rest_framework import viewsets
 from . import models, serializers
 
 
-# TODO: validate credentials on create/update (using client)
 class CredentialViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CredentialSerializer
 
