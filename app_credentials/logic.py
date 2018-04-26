@@ -10,7 +10,7 @@ def initialize(credential):
 
     fetched_app = client.post('v1/get-app-using-app-credential')
     if fetched_app is not None:
-        app = smp.patch(f'apps/v1/by-external-id/{client.medium_id}:{fetched_app["external_id"]}',
+        app = smp.patch(f'apps/v1/by-external-id/{client.medium}:{fetched_app["external_id"]}',
                         json=fetched_app)
         credential.app_id = app['id']
     else:

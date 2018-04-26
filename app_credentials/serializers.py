@@ -11,8 +11,8 @@ from .logic import initialize
 class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
     class Meta:
         model = models.Credential
-        fields = ('id', 'medium_id', 'app_id', 'key', 'secret', 'extra', 'scope', 'created_at', 'updated_at')
-        writable_fields = ('medium_id', 'key', 'secret', 'extra', 'scope')
+        fields = ('id', 'medium', 'app_id', 'key', 'secret', 'extra', 'scope', 'created_at', 'updated_at')
+        writable_fields = ('medium', 'key', 'secret', 'extra', 'scope')
 
     serializer_choice_field = ChoiceDisplayField
 
