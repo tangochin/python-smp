@@ -1,5 +1,6 @@
 {
   "name": "app-credentials",
+  "version": "v1",
   "migrate": true,
   "celery": true,
   "mq_consumer": true,
