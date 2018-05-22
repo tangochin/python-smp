@@ -2,6 +2,7 @@
   "name": "app-credentials",
   "migrate": true,
   "celery": true,
+  "mq_consumer": true,
   "requirements": [
     "postgres",
     "redis"
