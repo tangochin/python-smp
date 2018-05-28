@@ -57,8 +57,8 @@ describe(serviceUrl, () => {
                     .expect(201)
                     .then(res => res.body);
 
-                assert.equal(testObject['app_id'], appId, 'app_id is set')
-                assert.notEqual(testObject['id'], null, 'object is saved')
+                assert.equal(testObject.app_id, appId, 'app_id is set')
+                assert.notEqual(testObject.id, null, 'object is saved')
                 assert.include(testObject, data, 'include request data');
                 assert.hasAllKeys(testObject, appFields, 'response has all keys');
             });
@@ -124,7 +124,7 @@ describe(serviceUrl, () => {
                     .then(res => res.body);
                 
                 testObject = object;
-                assert.equal(testObject['secret'], secret, 'secret was changed');
+                assert.equal(testObject.secret, secret, 'secret was changed');
                 assert.hasAllKeys(testObject, appFields, 'response has all keys');
             });
         });
