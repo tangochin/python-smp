@@ -32,7 +32,7 @@ describe(serviceUrl, () => {
             ];
         
         describe('POST /', () => {
-            it('create an app if data is valid', async () => {
+            it('create an app credential if data is valid', async () => {
                 let sMediumClient = mockService(mediumClientUrl),
                     sAppsClient = mockService(appsClientUrl);
         
@@ -65,7 +65,7 @@ describe(serviceUrl, () => {
         });
 
         describe('GET /', () => {
-            it('returns a list of app objects', async () => {
+            it('returns a list of app credential objects', async () => {
                 let objects = await request.get(serviceUrl)
                     .expect(200)
                     .then(res => res.body);
@@ -78,7 +78,7 @@ describe(serviceUrl, () => {
 
         describe('GET /:id', () => {
             it('return object by id', async () => {
-                let object = await request.get(`${serviceUrl}${testObject['id']}`)
+                let object = await request.get(`${serviceUrl}${testObject.id}`)
                     .expect(200)
                     .then(res => res.body);
                 
@@ -94,11 +94,11 @@ describe(serviceUrl, () => {
 
                 data['secret'] = secret;
                 
-                sAppsClient.router.get(`/by-id/${testObject['app_id']}`, async ctx => {
-                    assert.equal(ctx.request.body.credential.id, testObject['id'], 'uses provided id for requests');
+                sAppsClient.router.get(`/by-id/${testObject.app_id}`, async ctx => {
+                    assert.equal(ctx.request.body.credential.id, testObject.id, 'uses provided id for requests');
                     ctx.status = 200;
                     ctx.body = {
-                        'id': testObject['app_id'],
+                        'id': testObject.app_id,
                     }
                 });
 
@@ -118,23 +118,23 @@ describe(serviceUrl, () => {
                     }
                 });
 
-                let object = await request.patch(`${serviceUrl}${testObject['id']}`)
+                let object = await request.patch(`${serviceUrl}${testObject.id}`)
                     .send({secret: secret})
                     .expect(200)
                     .then(res => res.body);
                 
                 testObject = object;
-                assert.equal(testObject['secret'], secret, 'secret is change');
+                assert.equal(testObject['secret'], secret, 'secret was changed');
                 assert.hasAllKeys(testObject, appFields, 'response has all keys');
             });
         });
 
         describe('DELETE /:id', () => {
             it('delete object by id', async () => {
-                await request.delete(`${serviceUrl}${testObject['id']}`)
+                await request.delete(`${serviceUrl}${testObject.id}`)
                     .expect(204);
                 
-                await request.get(`${serviceUrl}${testObject['id']}`)
+                await request.get(`${serviceUrl}${testObject.id}`)
                     .expect(404);
 
                 let objects = await request.get(`${serviceUrl}`)
