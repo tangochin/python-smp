@@ -19,7 +19,10 @@ class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
     def create(self, validated_data):
         credential = models.Credential(**validated_data)
         with wrap_media_errors():
-            return initialize(credential)
+            initialize(credential)
+
+        credential.save()
+        return credential
 
     def update(self, instance, validated_data):
         credential = instance
@@ -28,4 +31,7 @@ class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
             setattr(credential, attr, value)
 
         with wrap_media_errors():
-            return initialize(credential)
+            initialize(credential)
+
+        credential.save()
+        return credential
