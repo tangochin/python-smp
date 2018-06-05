@@ -68,7 +68,7 @@ describe(serviceUrl, () => {
             it('returns a list of app credential objects', async () => {
                 let objects = await request.get(serviceUrl)
                     .expect(200)
-                    .then(res => res.body);
+                    .then(res => res.body.results);
 
                 assert.isArray(objects, 'response is array');
                 assert.isNotEmpty(objects, 'response is not empty');
@@ -139,7 +139,7 @@ describe(serviceUrl, () => {
 
                 let objects = await request.get(`${serviceUrl}`)
                     .expect(200)
-                    .then(res => res.body);
+                    .then(res => res.body.results);
 
                 assert.isEmpty(objects, 'response is empty')
             }); 
