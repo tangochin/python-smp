@@ -10,13 +10,13 @@ describe(serviceUrl, () => {
     beforeEach(() => auth.mock({appId: smpAppId}));
     beforeEach(() => prepareService(serviceUrl));
 
-    describe('/', () => {
+    describe('/credentials/', () => {
         let externalId = chance.word(),
             appId = chance.id(),
             data = {
-                'medium': medium, 
-                'scope': 'group', 
-                'key': chance.string(), 
+                'medium': medium,
+                'scope': 'group',
+                'key': chance.string(),
                 'secret': chance.string(),
             },
             appFields = [
@@ -30,12 +30,12 @@ describe(serviceUrl, () => {
                 'created_at',
                 'updated_at',
             ];
-        
+
         describe('POST /', () => {
             it('create an app credential if data is valid', async () => {
                 let sMediumClient = mockService(mediumClientUrl),
                     sAppsClient = mockService(appsClientUrl);
-        
+
                 sMediumClient.router.post('/get-app-using-app-credential', async ctx => {
                     assert.include(ctx.request.body.credential, data, 'uses provided credential data for requests');
                     ctx.status = 200;
@@ -43,7 +43,7 @@ describe(serviceUrl, () => {
                         'external_id': externalId,
                     };
                 });
-                
+
                 sAppsClient.router.patch(`/by-external-id/${medium}:${externalId}`, async ctx => {
                     assert.equal(ctx.request.body.external_id, externalId, 'uses provided external_id for requests');
                     ctx.status = 200;
@@ -52,7 +52,7 @@ describe(serviceUrl, () => {
                     }
                 });
 
-                testObject = await request.post(serviceUrl)
+                testObject = await request.post('/app-credentials/v1/credentials/')
                     .send(data)
                     .expect(201)
                     .then(res => res.body);
@@ -66,7 +66,7 @@ describe(serviceUrl, () => {
 
         describe('GET /', () => {
             it('returns a list of app credential objects', async () => {
-                let objects = await request.get(serviceUrl)
+                let objects = await request.get('/app-credentials/v1/credentials/')
                     .expect(200)
                     .then(res => res.body.results);
 
@@ -78,11 +78,11 @@ describe(serviceUrl, () => {
 
         describe('GET /:id', () => {
             it('return object by id', async () => {
-                let object = await request.get(`${serviceUrl}${testObject.id}`)
+                let object = await request.get(`/app-credentials/v1/credentials/${testObject.id}`)
                     .expect(200)
                     .then(res => res.body);
-                
-                assert.deepEqual(testObject, object, 'include request data');    
+
+                assert.deepEqual(testObject, object, 'include request data');
             });
         });
 
@@ -93,7 +93,7 @@ describe(serviceUrl, () => {
                     secret = chance.string();
 
                 data['secret'] = secret;
-                
+
                 sAppsClient.router.get(`/by-id/${testObject.app_id}`, async ctx => {
                     assert.equal(ctx.request.body.credential.id, testObject.id, 'uses provided id for requests');
                     ctx.status = 200;
@@ -118,11 +118,11 @@ describe(serviceUrl, () => {
                     }
                 });
 
-                let object = await request.patch(`${serviceUrl}${testObject.id}`)
+                let object = await request.patch(`/app-credentials/v1/credentials/${testObject.id}`)
                     .send({secret: secret})
                     .expect(200)
                     .then(res => res.body);
-                
+
                 testObject = object;
                 assert.equal(testObject.secret, secret, 'secret was changed');
                 assert.hasAllKeys(testObject, appFields, 'response has all keys');
@@ -131,18 +131,18 @@ describe(serviceUrl, () => {
 
         describe('DELETE /:id', () => {
             it('delete object by id', async () => {
-                await request.delete(`${serviceUrl}${testObject.id}`)
+                await request.delete(`/app-credentials/v1/credentials/${testObject.id}`)
                     .expect(204);
-                
-                await request.get(`${serviceUrl}${testObject.id}`)
+
+                await request.get(`/app-credentials/v1/credentials/${testObject.id}`)
                     .expect(404);
 
-                let objects = await request.get(`${serviceUrl}`)
+                let objects = await request.get('/app-credentials/v1/credentials/')
                     .expect(200)
                     .then(res => res.body.results);
 
                 assert.isEmpty(objects, 'response is empty')
-            }); 
+            });
         });
     });
 });

@@ -7,7 +7,7 @@ from . import views
 
 
 router = SmpRouter()
-router.register('', views.CredentialViewSet, base_name='credential')
+router.register('credentials', views.CredentialViewSet, base_name='credential')
 
 urlpatterns = router.urls
 
