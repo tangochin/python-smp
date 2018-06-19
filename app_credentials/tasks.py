@@ -1,5 +1,5 @@
-from smp_commons.mq import subscribe
-from smp_commons.celery import task
+from smp_base_django.mq import subscribe
+from smp_base_django.celery import task
 
 from . import models
 

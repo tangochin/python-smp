@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from smp_commons.utils import wrap_media_errors
+from smp_base_django.utils import wrap_media_errors
 from utils.django.serializers.fields import ChoiceDisplayField
 from utils.django.serializers.mixins import WriteableFieldsMixin
 

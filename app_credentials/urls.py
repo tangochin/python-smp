@@ -1,7 +1,7 @@
 from django.urls import path
 
-from smp_commons.views import get_open_api_view
-from smp_commons.routers import SmpRouter
+from smp_base_django.views import get_open_api_view
+from smp_base_django.routers import SmpRouter
 
 from . import views
 
