@@ -25,7 +25,10 @@ class CredentialViewSet(viewsets.ModelViewSet):
     ordering_fields = ('created_at', )
 
     def get_queryset(self):
-        return models.Credential.objects.filter(owner_id=self.request.auth.app_id)
+        qs = models.Credential.objects.all()
+        if not self.request.auth.is_internal:
+            qs = qs.filter(owner_id=self.request.auth.app_id)
+        return qs
 
     def perform_create(self, serializer):
         serializer.save(owner_id=self.request.auth.app_id)
