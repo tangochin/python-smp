@@ -2,11 +2,12 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 
 from smp_base_django.models import Medium
+from utils.django.models import EnumField
 
 
 class Credential(models.Model):
     owner_id = models.IntegerField()
-    medium = models.SmallIntegerField(choices=Medium.as_choices())
+    medium = EnumField(choices_enum=Medium)
 
     app_id = models.IntegerField(blank=True, null=True)
 
