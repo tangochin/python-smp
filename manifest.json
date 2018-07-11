@@ -4,6 +4,7 @@
   "migrate": true,
   "celery": true,
   "mq_consumer": true,
+  "web_timeout": 30,
   "requirements": [
     "postgres",
     "redis"
