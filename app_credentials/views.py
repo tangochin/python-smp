@@ -4,7 +4,7 @@ from utils.django import filters
 from . import models, serializers
 
 
-class CredentialFilter(filters.FilterSet):
+class CredentialFilterSet(filters.FilterSet):
     class Meta:
         model = models.Credential
         fields = {
@@ -21,7 +21,7 @@ class CredentialFilter(filters.FilterSet):
 
 class CredentialViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CredentialSerializer
-    filter_class = CredentialFilter
+    filterset_class = CredentialFilterSet
     ordering_fields = ('created_at', )
 
     def get_queryset(self):
