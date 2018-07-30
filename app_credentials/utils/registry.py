@@ -40,6 +40,6 @@ class MediumSerializersRegistry(dict):
             key = key.value
 
         if key in self:
-            return super(MediumSerializersRegistry, self).__getitem__(key)
+            return super().__getitem__(key)
 
         raise NotRegistered(f'Key "{key}" has not been registered.')
