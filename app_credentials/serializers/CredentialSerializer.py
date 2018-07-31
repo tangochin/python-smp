@@ -4,8 +4,10 @@ from smp_base_django.utils import wrap_media_errors
 from utils.django.serializers.fields import ChoiceDisplayField
 from utils.django.serializers.mixins import WriteableFieldsMixin
 
-from . import models
-from .logic import initialize
+from .. import models
+from ..logic import initialize
+
+from .medium_serializers import medium_extra_credential_serializers
 
 
 class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
@@ -15,6 +17,20 @@ class CredentialSerializer(WriteableFieldsMixin, serializers.ModelSerializer):
         writable_fields = ('medium', 'key', 'secret', 'extra', 'scope')
 
     serializer_choice_field = ChoiceDisplayField
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        try:
+            medium_serializer = medium_extra_credential_serializers[attrs['medium']](data=attrs['extra'])
+            medium_serializer.is_valid(raise_exception=True)
+        except serializers.ValidationError as exc:
+            # added extra prefix to field in error message
+            exc.detail = {f'extra.{field_name}': errors for field_name, errors in exc.detail.items()}
+            raise exc
+        except KeyError:
+            pass
+
+        return attrs
 
     def create(self, validated_data):
         credential = models.Credential(**validated_data)
