@@ -1,5 +1,6 @@
 from rest_framework import viewsets
-from utils.django import filters
+
+from smp_base_django import filters
 
 from . import models, serializers
 
