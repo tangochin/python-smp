@@ -1,4 +1,4 @@
-const { request, prepareService, describeService, mockService, auth, assert, chance } = require('smp-test-utils');
+const { request, prepareService, mockService, auth, assert, chance } = require('smp-test-utils');
 
 const serviceUrl = '/app-credentials/v1/';
 const medium = 'vk', mediumClientUrl = '/client-vk/v1/';
