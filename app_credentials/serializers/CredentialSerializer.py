@@ -48,7 +48,7 @@ class CredentialSerializer(OwnerMixin, serializers.ModelSerializer):
     def create(self, validated_data):
         credential = models.Credential(**validated_data)
         with wrap_media_errors():
-            initialize(credential)
+            initialize(credential, self.context['request'])
 
         credential.save()
         return credential
@@ -60,7 +60,7 @@ class CredentialSerializer(OwnerMixin, serializers.ModelSerializer):
             setattr(credential, attr, value)
 
         with wrap_media_errors():
-            initialize(credential)
+            initialize(credential, self.context['request'])
 
         credential.save()
         return credential

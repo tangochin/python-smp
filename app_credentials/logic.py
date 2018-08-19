@@ -1,10 +1,8 @@
-from utils.django.context import get_request
-
 from . import serializers
 
 
-def initialize(credential):
-    smp = get_request().smp
+def initialize(credential, request):
+    smp = request.smp
     serializer = serializers.CredentialSerializer(credential)
     client = smp.get_media_client(serializer.data)
 
