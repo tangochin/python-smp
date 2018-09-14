@@ -19,5 +19,12 @@ class Credential(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['owner_id']),
+            models.Index(fields=['medium']),
+            models.Index(fields=['app_id']),
+        ]
+
     def __str__(self):
         return f'{self.owner_id}:{self.get_medium_display()}'
