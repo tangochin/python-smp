@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from smp_base_django.models import Medium
+from smp.models import Medium
 
 from . import medium_extra_credential_serializers
 

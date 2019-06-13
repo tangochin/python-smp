@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 
-from smp_base_django.models import Medium
+from smp.models import Medium
 from utils.django.models import EnumField
 
 
